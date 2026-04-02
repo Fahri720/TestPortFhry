@@ -1,0 +1,374 @@
+<!DOCTYPE html><html lang="id"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fahri Portfolio</title> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">  <style>
+    * {margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+    html {scroll-behavior:smooth}
+    body {background:#f4fbff;color:#111}
+
+    /* NAVBAR */
+    header {
+      position:fixed;width:100%;top:0;left:0;
+      background:rgba(0,51,102,0.6);
+      backdrop-filter:blur(15px);
+      padding:12px 40px;
+      display:flex;justify-content:space-between;align-items:center;
+      z-index:1000;border-bottom:1px solid rgba(255,255,255,0.1);
+      transition:0.3s
+    }
+
+    header.scrolled {padding:8px 40px;background:rgba(0,51,102,0.95)}
+
+    .logo {display:flex;align-items:center;gap:10px;color:#fff;font-weight:700}
+
+    .profile-img {width:40px;height:40px;border-radius:50%;border:2px solid #ff7ac8;object-fit:cover}
+
+    nav {display:flex;align-items:center;gap:25px}
+
+    nav a {
+      color:#fff;text-decoration:none;font-weight:500;
+      position:relative;padding:5px 0;transition:0.3s
+    }
+
+    nav a::after {
+      content:'';position:absolute;width:0%;height:2px;
+      bottom:-5px;left:0;background:#ff7ac8;transition:0.3s
+    }
+
+    nav a:hover::after, nav a.active::after {width:100%}
+    nav a:hover, nav a.active {color:#ff7ac8}
+
+    /* DROPDOWN */
+    .dropdown{position:relative}
+    .dropdown-menu{
+      position:absolute;top:35px;left:0;
+      background:#1e3a8a;border-radius:10px;
+      padding:10px;display:none;flex-direction:column;min-width:150px
+    }
+    .dropdown-menu a{margin:5px 0}
+    .dropdown:hover .dropdown-menu{display:flex}
+
+    /* HAMBURGER */
+    .hamburger{display:none;flex-direction:column;cursor:pointer;gap:5px}
+    .hamburger div{width:25px;height:3px;background:white;border-radius:5px}
+
+    @media(max-width:768px){
+      nav{
+        position:absolute;top:70px;right:0;
+        background:#1e3a8a;
+        flex-direction:column;width:220px;
+        padding:20px;display:none;border-radius:0 0 10px 10px
+      }
+      nav.active{display:flex}
+      .hamburger{display:flex}
+    }
+
+    /* HERO */
+    .hero{
+      height:100vh;display:flex;align-items:center;justify-content:space-between;
+      padding:0 60px;background:linear-gradient(135deg,#87ceeb,#1e3a8a);color:white
+    }
+
+    .hero-text h2{font-size:48px;animation:fadeUp 1s ease}
+    .hero-text span{color:#ff7ac8}
+    .hero-text p{margin:20px 0;max-width:500px;animation:fadeUp 1.3s ease}
+
+    .btn{
+      padding:12px 25px;background:#ff7ac8;color:white;border-radius:25px;
+      text-decoration:none;transition:0.3s;display:inline-block;animation:fadeUp 1.6s ease
+    }
+
+    .btn:hover{background:#ff4fb3;transform:scale(1.05)}
+
+    section{padding:100px 60px}
+    .title{text-align:center;margin-bottom:40px;font-size:32px;color:#1e3a8a}
+
+    .about{display:flex;gap:40px;align-items:center}
+
+    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px}
+
+    .card{
+      background:white;padding:20px;border-radius:15px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.1);
+      transition:0.3s;opacity:0;transform:translateY(40px)
+    }
+
+    .card.show{opacity:1;transform:translateY(0)}
+    .card:hover{transform:translateY(-10px) scale(1.02)}
+
+    footer{text-align:center;padding:30px;background:#1e3a8a;color:white}
+
+    /* SKILLS */
+    #skills{padding:100px 20px}
+
+    .skill{
+      width:100%;max-width:1200px;margin:25px auto;padding:18px 25px;
+      border:2px solid #e0e7ff;border-radius:15px;background:white;
+      box-shadow:0 5px 15px rgba(0,0,0,0.08);
+      transition:0.3s;opacity:0;transform:translateY(40px)
+    }
+
+    .skill.show{opacity:1;transform:translateY(0)}
+
+    .skill:hover{
+      transform:translateY(-5px);
+      border-color:#ff7ac8;
+      box-shadow:0 10px 25px rgba(0,0,0,0.15)
+    }
+
+    .skill-info{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-weight:600;color:#1e3a8a}
+
+    .skill-bar{width:100%;height:10px;background:#ddd;border-radius:10px;overflow:hidden}
+
+    .skill-fill{height:100%;border-radius:10px;width:0}
+
+    .uiux{width:80%;background:linear-gradient(90deg,#ff7ac8,#ff4fb3)}
+    .html{width:90%;background:linear-gradient(90deg,#ff9a00,#ff5e00)}
+    .css{width:85%;background:linear-gradient(90deg,#00c6ff,#0072ff)}
+    .js{width:70%;background:linear-gradient(90deg,#f7df1e,#f0c000)}
+
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(30px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+  
+
+    /* DARK MODE */
+    body.dark {
+      background:#0f172a;
+      color:#e5e7eb;
+    }
+
+    body.dark header {background:rgba(15,23,42,0.8)}
+    body.dark .card, body.dark .skill {background:#1e293b;color:#e5e7eb}
+
+    /* TOGGLE BUTTON */
+    .dark-toggle{
+      position:fixed;bottom:20px;right:20px;
+      background:#ff7ac8;color:white;
+      border:none;padding:10px 15px;border-radius:50px;
+      cursor:pointer;z-index:999;box-shadow:0 5px 15px rgba(0,0,0,0.2)
+    }
+
+    /* LOADER */
+    
+
+    #loader.hide{opacity:0;visibility:hidden}
+
+    /* PARALLAX */
+    .hero{background-attachment:fixed}
+
+  
+
+    /* CURSOR GLOW */
+    .cursor-glow{
+      position:fixed;width:20px;height:20px;border-radius:50%;
+      background:rgba(255,122,200,0.6);
+      pointer-events:none;transform:translate(-50%,-50%);
+      z-index:9999;filter:blur(10px)
+    }
+
+  
+
+    /* PREMIUM HOVER LINK */
+    .link{
+      position:relative;
+      color:#1e3a8a;
+      text-decoration:none;
+      font-weight:600;
+      transition:0.3s;
+    }
+
+    .link::after{
+      content:'';
+      position:absolute;
+      width:0%;
+      height:2px;
+      bottom:-3px;
+      left:0;
+      background:#ff7ac8;
+      transition:0.3s;
+    }
+
+    .link:hover{
+      color:#ff7ac8;
+    }
+
+    .link:hover::after{
+      width:100%;
+    }
+
+    /* MAGNETIC BUTTON */
+    .btn{
+      transition:transform 0.2s ease;
+    }
+
+    /* CARD GLOW */
+    .card:hover{
+      box-shadow:0 15px 40px rgba(255,122,200,0.4);
+    }
+
+    .skill:hover{
+      box-shadow:0 15px 40px rgba(0,114,255,0.3);
+    }
+
+  </style></head><body><button class="dark-toggle" onclick="toggleDark()">🌙</button>
+
+</form><div id="loader"></div><button class="dark-toggle" onclick="toggleDark()"><i class="bi bi-moon-stars"></i></button>
+
+<header id="navbar">
+  <div class="logo">
+    <img src="pp.png" class="profile-img">
+    Fahry.dev<i class="bi bi-apple"></i>
+  </div>  <div class="hamburger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>  <nav id="menu">
+    <a href="#home">Home <i class="bi bi-house"></i></a>
+    <a href="#about">About Me <i class="bi bi-person-arms-up"></i></a>
+    <a href="#skills">My Skills <i class="bi bi-award"></i></a>
+    <a href="#projects">Projects <i class="bi bi-briefcase-fill"></i></a>
+    <a href="#contact">Contact <i class="bi bi-telephone"></i></a><div class="dropdown">
+  <a href="#">More ▾</a>
+  <div class="dropdown-menu">
+    <a href="#">Kopo</a>
+    <a href="#">Lain Kopo</a>
+    <a href="#">Dengkeng</a>
+  </div>
+</div>
+
+  </nav>
+</header><section class="hero" id="home">
+  <div class="hero-text">
+    <h2>Halo, Saya <span id="typing"></span></h2>
+    <p>Developer yang fokus ke website modern dengan UI/UX premium. Tapi cita cita jadi dokter :)</p>
+    <a href="#projects" class="btn">Lihat Project</a>
+  </div>
+</section><section id="about">
+  <h2 class="title">About Me<i class="bi bi-person-arms-up"></i></h2>
+  <div class="about">
+    <p>Saya Adalah seorang pelajar kelas XI 2025-2026, Saya berjenis kelamin pria, berdomisili bandung, saya masih kelas 11 dan akan naik kelas 12 pada tahun ini, saya lahir pada tahun 2009 di sumedang, tepat nya pada 20-06-2009,tinggi saya 180cm(±), saya seorang yang selalu berambisi,saya sedang belajar dan terus mengembangkan bakat saya, mungkin web yang saya buat masi tergolong mudah atau sangat simple, tapi setiap harinya saya meng upgrade kemampuan saya.</p>
+  </div>
+</section><section id="skills">
+  <h2 class="title">My Skills <i class="bi bi-award"></i></h2>  <div class="skill">
+    <div class="skill-info"><span>UI/UX Design</span><span>80%</span></div>
+    <div class="skill-bar"><div class="skill-fill uiux"></div></div>
+  </div>  <div class="skill">
+    <div class="skill-info"><span>HTML</span><span>90%</span></div>
+    <div class="skill-bar"><div class="skill-fill html"></div></div>
+  </div>  <div class="skill">
+    <div class="skill-info"><span>CSS</span><span>85%</span></div>
+    <div class="skill-bar"><div class="skill-fill css"></div></div>
+  </div>  <div class="skill">
+    <div class="skill-info"><span>JavaScript</span><span>70%</span></div>
+    <div class="skill-bar"><div class="skill-fill js"></div></div>
+  </div></section><section id="projects">
+  <h2 class="title">Projects <i class="bi bi-briefcase-fill"></i></h2>
+  <div class="projects">
+    <div class="card"><h3><a href="https://fahri720.github.io/GalleryEthanoll/">Web Galery <i class="bi bi-image-fill"></i></a></h3><p>Gallery agar foto' tidak hilang(btw itu my ex)</p></div>
+    <div class="card"><h3>Landing Page</h3><p>High conversion (coming soon)</p></div>
+    <div class="card"><h3>UI Design</h3><p>Futuristic(coming soon)</p></div>
+  </div>
+</section><section id="contact">
+  <h2 class="title">Contact <i class="bi bi-telephone"></i></h2>  <div style="display:flex;flex-direction:column;align-items:center;gap:15px;">
+    <p><a href="https://www.instagram.com/fhrysvro__" class="link">Instagram</a></p>
+    <p><a href="https://wa.me/6283879414716" class="link">WhatsApp</a></p>
+    <p><a href="https://www.tiktok.com/@idcfahry_" class="link">Tiktok</a></p>
+
+  </div>
+</section><footer>
+  <p>© 2026 Fahry</p>
+</footer><script>
+function toggleMenu(){document.getElementById('menu').classList.toggle('active')}
+
+// NAV ACTIVE AUTO
+const sections=document.querySelectorAll('section');
+const navLinks=document.querySelectorAll('nav a');
+
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('navbar');
+  nav.classList.toggle('scrolled',window.scrollY>50);
+
+  let current="";
+  sections.forEach(sec=>{
+    const top=window.scrollY;
+    if(top>=sec.offsetTop-100){current=sec.getAttribute('id');}
+  });
+
+  navLinks.forEach(a=>{
+    a.classList.remove('active');
+    if(a.getAttribute('href')==="#"+current){a.classList.add('active');}
+  });
+});
+
+// SCROLL ANIMATION
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){entry.target.classList.add('show');}
+  });
+});
+
+document.querySelectorAll('.card, .skill').forEach(el=>observer.observe(el));
+
+// SKILL BAR ANIMATION ON VIEW
+document.querySelectorAll('.skill-fill').forEach(bar=>{
+  const width=bar.classList.contains('uiux')?'80%':
+               bar.classList.contains('html')?'90%':
+               bar.classList.contains('css')?'85%':'70%';
+  observer.observe(bar.parentElement.parentElement);
+  bar.style.width=width;
+});
+
+
+// DARK MODE
+function toggleDark(){
+  document.body.classList.toggle('dark');
+}
+
+// LOADER
+
+
+
+
+// TYPING EFFECT
+const text="Fahry";
+let i=0;
+function typing(){
+  if(i<text.length){
+    document.getElementById('typing').innerHTML+=text.charAt(i);
+    i++;setTimeout(typing,100);
+  }
+}
+typing();
+
+// CURSOR GLOW
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{
+  cursor.style.top=e.clientY+'px';
+  cursor.style.left=e.clientX+'px';
+});
+
+
+
+
+
+
+
+
+// MAGNETIC EFFECT
+const btn=document.querySelector('.btn');
+document.addEventListener('mousemove',(e)=>{
+  const rect=btn.getBoundingClientRect();
+  const x=e.clientX-rect.left-rect.width/2;
+  const y=e.clientY-rect.top-rect.height/2;
+
+  if(Math.abs(x)<100 && Math.abs(y)<50){
+    btn.style.transform=`translate(${x*0.2}px,${y*0.2}px)`;
+  }else{
+    btn.style.transform='translate(0,0)';
+  }
+});
+
+</script></body>
+</html>
